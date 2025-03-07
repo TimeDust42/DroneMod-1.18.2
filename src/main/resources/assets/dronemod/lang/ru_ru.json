@@ -1,0 +1,8 @@
+{
+  "itemGroup.dronetab": "DroneMod",
+
+  "item.dronemod.aluminium_ingot": "Алюминиевый Слиток",
+  "item.dronemod.drone_controller": "Контроллер Дронов",
+
+  "entity.dronemod.scout_drone": "Дрон Разведчик"
+}

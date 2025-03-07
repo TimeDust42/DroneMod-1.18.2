@@ -1,0 +1,8 @@
+{
+  "itemGroup.dronetab": "DroneMod",
+
+  "item.dronemod.aluminium_ingot": "Aluminium Ingot",
+  "item.dronemod.drone_controller": "Drone Controller",
+
+  "entity.dronemod.scout_drone": "Scout Drone"
+}
