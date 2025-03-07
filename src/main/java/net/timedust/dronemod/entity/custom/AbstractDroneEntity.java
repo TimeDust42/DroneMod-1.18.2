@@ -1,15 +1,9 @@
 package net.timedust.dronemod.entity.custom;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.timedust.dronemod.network.DroneControlPacket;
-import net.timedust.dronemod.network.ModNetwork;
 
 import java.util.Collections;
 import java.util.UUID;
@@ -17,8 +11,6 @@ import java.util.UUID;
 public abstract class AbstractDroneEntity extends LivingEntity {
 
     private UUID droneId;
-    private boolean isBeingControlled = false;
-    private UUID controllingPlayer = null;
 
     protected AbstractDroneEntity(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
@@ -29,46 +21,6 @@ public abstract class AbstractDroneEntity extends LivingEntity {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
 
-    }
-
-    @Override
-    public InteractionResult interact(Player player, InteractionHand hand) {
-        if (hand == InteractionHand.MAIN_HAND && !this.level.isClientSide) {
-            // Если дрон уже управляется, игнорируем взаимодействие
-            if (isBeingControlled) {
-                return InteractionResult.FAIL;
-            }
-
-            // Активируем режим управления
-            isBeingControlled = true;
-            controllingPlayer = player.getUUID();
-
-            // Отправляем пакет клиенту для активации камеры
-            if (player instanceof ServerPlayer serverPlayer) {
-                ModNetwork.sendToPlayer(new DroneControlPacket(this.getId(), true), serverPlayer);
-            }
-
-            return InteractionResult.SUCCESS;
-        }
-
-        return InteractionResult.PASS;
-    }
-
-    // Геттеры и сеттеры
-    public boolean isBeingControlled() {
-        return isBeingControlled;
-    }
-
-    public void setBeingControlled(boolean controlled) {
-        this.isBeingControlled = controlled;
-    }
-
-    public UUID getControllingPlayer() {
-        return controllingPlayer;
-    }
-
-    public void setControllingPlayer(UUID playerId) {
-        this.controllingPlayer = playerId;
     }
 
     @Override

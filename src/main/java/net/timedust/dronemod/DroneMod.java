@@ -13,7 +13,6 @@ import net.timedust.dronemod.entity.client.model.ScoutDroneModel;
 import net.timedust.dronemod.entity.client.renderer.ScoutDroneRenderer;
 import net.timedust.dronemod.entity.custom.ScoutDroneEntity;
 import net.timedust.dronemod.item.ModItems;
-import net.timedust.dronemod.network.ModNetwork;
 import org.slf4j.Logger;
 
 @Mod(DroneMod.MOD_ID)
@@ -27,7 +26,6 @@ public class DroneMod {
 
         ModItems.register(eventBus);
         ModEntities.register(eventBus);
-        ModNetwork.register();
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::registerRenderers); // Добавлено
